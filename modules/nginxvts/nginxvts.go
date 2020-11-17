@@ -13,6 +13,14 @@ const (
 	defaultHTTPTimeout = time.Second
 )
 
+func init() {
+	creator := module.Creator{
+		Create: func() module.Module { return New() },
+	}
+
+	module.Register("nginxvts", creator)
+}
+
 // Config is the Nginx module configuration.
 type Config struct {
 	web.HTTP `yaml:",inline"`
@@ -42,44 +50,42 @@ func New() *NginxVTS {
 	return &NginxVTS{Config: config}
 }
 
-func init()
-
 // Cleanup makes cleanup.
 func (NginxVTS) Cleanup() {}
 
 // Init makes initialization.
-func (nvts *NginxVTS) Init() bool {
-	if nvts.URL == "" {
-		nvts.Error("URL not set")
+func (nv *NginxVTS) Init() bool {
+	if nv.URL == "" {
+		nv.Error("URL not set")
 		return false
 	}
 
-	// client, err := web.NewHTTPClient(n.Client)
+	client, err := web.NewHTTPClient(nv.Client)
 	if err != nil {
-		nvts.Error(err)
+		nv.Error(err)
 		return false
 	}
 
-	// n.apiClient = newAPIClient(client, n.Request)
+	nv.apiClient = newAPIClient(client, nv.Request)
 
-	// n.Debugf("using URL %s", n.URL)
-	// n.Debugf("using timeout: %s", n.Timeout.Duration)
+	nv.Debugf("using URL %s", nv.URL)
+	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
 
 	return true
 }
 
 // Check makes check.
-func (nvts *NginxVTS) Check() bool { return len(nvts.Collect()) > 0 }
+func (nv *NginxVTS) Check() bool { return len(nv.Collect()) > 0 }
 
 // Charts creates Charts.
 func (NginxVTS) Charts() *Charts { return charts.Copy() }
 
 // Collect collects metrics.
-func (nvts *NginxVTS) Collect() map[string]int64 {
-	mx, err := nvts.collect()
+func (nv *NginxVTS) Collect() map[string]int64 {
+	mx, err := nv.collect()
 
 	if err != nil {
-		nvts.Error(err)
+		nv.Error(err)
 		return nil
 	}
 

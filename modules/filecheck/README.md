@@ -19,6 +19,7 @@ Directory metrics:
 -   existence
 -   time since the last modification
 -   number of files
+-   size
 
 ## Permissions
 
@@ -51,6 +52,7 @@ Files and directories have their own set of charts.
 -   Dir Existence in `boolean`
 -   Dir Time Since the Last Modification in `seconds`
 -   Dir Number of Files in `files`
+-   Dir Size in `bytes`
 
 ## Configuration
 
@@ -74,6 +76,7 @@ jobs:
        - '/path/to/file1'
        - '/path/to/file2'
    dirs:
+     collect_dir_size: no 
      include:
        - '/path/to/dir1'
        - '/path/to/dir2'
@@ -86,6 +89,7 @@ jobs:
 
  - name: dirs_example
    dirs:
+     collect_dir_size: yes
      include:
        - '/path/to/dir1'
        - '/path/to/dir2'

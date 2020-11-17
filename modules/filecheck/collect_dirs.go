@@ -3,6 +3,8 @@ package filecheck
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/netdata/go.d.plugin/agent/module"
@@ -41,13 +43,16 @@ func (fc *Filecheck) collectDir(mx map[string]int64, dirpath string, curTime tim
 	if num, err := calcDirNumOfFiles(dirpath); err == nil {
 		mx[dirDimID(dirpath, "num_of_files")] = int64(num)
 	}
+	if fc.Dirs.CollectDirSize {
+		if size, err := calcDirSize(dirpath); err == nil {
+			mx[dirDimID(dirpath, "size_bytes")] = size
+		}
+	}
 }
 
 func (fc *Filecheck) addDirToCharts(dirpath string) {
-	for _, c := range dirCharts {
-		chart := fc.Charts().Get(c.ID)
-		if chart == nil {
-			fc.Warningf("add dimension: couldn't find '%s' chart (dir '%s')", c.ID, dirpath)
+	for _, chart := range *fc.Charts() {
+		if !strings.HasPrefix(chart.ID, "dir_") {
 			continue
 		}
 
@@ -59,8 +64,10 @@ func (fc *Filecheck) addDirToCharts(dirpath string) {
 			id = dirDimID(dirpath, "mtime_ago")
 		case dirNumOfFilesChart.ID:
 			id = dirDimID(dirpath, "num_of_files")
+		case dirSizeChart.ID:
+			id = dirDimID(dirpath, "size_bytes")
 		default:
-			fc.Warningf("add dimension: couldn't dim id for '%s' chart (dir '%s')", c.ID, dirpath)
+			fc.Warningf("add dimension: couldn't dim id for '%s' chart (dir '%s')", chart.ID, dirpath)
 			continue
 		}
 
@@ -87,4 +94,18 @@ func calcDirNumOfFiles(dirpath string) (int, error) {
 	// TODO: include dirs?
 	names, err := f.Readdirnames(-1)
 	return len(names), err
+}
+
+func calcDirSize(dirpath string) (int64, error) {
+	var size int64
+	err := filepath.Walk(dirpath, func(_ string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return nil
+	})
+	return size, err
 }

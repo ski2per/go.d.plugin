@@ -102,6 +102,7 @@ func (nv *NginxVTS) Charts() *Charts {
 func (nv *NginxVTS) Collect() map[string]int64 {
 	fmt.Println("++++++++++++++++++++++ Collect()")
 	mx, err := nv.collect()
+	fmt.Println(mx)
 
 	if err != nil {
 		nv.Error(err)

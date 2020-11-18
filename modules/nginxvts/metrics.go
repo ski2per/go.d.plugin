@@ -6,14 +6,14 @@ type VTSData struct {
 	LoadMsec     int64  `json:"loadMsec"`
 	NowMsec      int64  `json:"nowMsec"`
 	Connections  struct {
-		Active   int64 `stm:"connections_active" json:"active"`
-		Reading  int64 `stm:"connections_reading" json:"reading"`
-		Writing  int64 `stm:"connections_writing" json:"writing"`
-		Waiting  int64 `stm:"connections_waiting" json:"waiting"`
-		Accepted int64 `stm:"connections_accepted" json:"accepted"`
-		Handled  int64 `stm:"connections_handled" json:"handled"`
-		Requests int64 `stm:"connections_requests" json:"requests"`
-	} `json:"connections"`
+		Active   int64 `stm:"active" json:"active"`
+		Reading  int64 `stm:"reading" json:"reading"`
+		Writing  int64 `stm:"writing" json:"writing"`
+		Waiting  int64 `stm:"waiting" json:"waiting"`
+		Accepted int64 `stm:"accepted" json:"accepted"`
+		Handled  int64 `stm:"handled" json:"handled"`
+		Requests int64 `stm:"requests" json:"requests"`
+	} `stm:"connections" json:"connections"`
 	ServerZones   map[string]Server              `json:"serverZones"`
 	UpstreamZones map[string][]Upstream          `json:"upstreamZones"`
 	FilterZones   map[string]map[string]Upstream `json:"filterZones"`

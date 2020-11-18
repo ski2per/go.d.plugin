@@ -15,7 +15,7 @@ var nginxVtsMainCharts = Charts{
 		Title: "Active Client Connections Including Waiting Connections",
 		Units: "connections",
 		Fam:   "connections",
-		Ctx:   "nginx.connections",
+		Ctx:   "nginxvts.connections",
 		Dims: Dims{
 			{ID: "connections_active", Name: "Active connections"},
 			{ID: "connections_reading", Name: "Reading connections"},

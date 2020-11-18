@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	defaultURL         = "http://127.0.0.1/status/format/json"
+	// defaultURL         = "http://127.0.0.1/status/format/json"
+	defaultURL         = "http://10.0.0.110/status/format/json"
 	defaultHTTPTimeout = time.Second
 )
 
@@ -95,7 +96,8 @@ func (nv *NginxVTS) Check() bool {
 // Charts creates Charts.
 func (nv *NginxVTS) Charts() *Charts {
 	fmt.Println("++++++++++++++++++++++ Charts()")
-	return nv.charts
+	return nginxVtsMainCharts.Copy()
+	// return nv.charts
 }
 
 // Collect collects metrics.

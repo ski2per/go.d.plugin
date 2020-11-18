@@ -34,7 +34,7 @@ type NginxVTS struct {
 	Config `yaml:",inline"`
 
 	apiClient *apiClient
-	charts    *module.Charts
+	// charts    *module.Charts
 }
 
 // New creates Nginx with default values.
@@ -76,12 +76,12 @@ func (nv *NginxVTS) Init() bool {
 	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
 
 	//Init charts
-	charts, err := nv.initCharts()
+	// charts, err := nv.initCharts()
 	if err != nil {
 		nv.Errorf("charts init: %v", err)
 		return false
 	}
-	nv.charts = charts
+	// nv.charts = charts
 
 	return true
 }

@@ -17,7 +17,7 @@ var nginxVtsMainCharts = Charts{
 		Fam:   "connections",
 		Ctx:   "nginxvts.connections",
 		Dims: Dims{
-			{ID: "connections_active", Name: "Active connections"},
+			{ID: "connections_active", Name: "Active connections", Algo: module.Incremental},
 			{ID: "connections_reading", Name: "Reading connections"},
 			{ID: "connections_writing", Name: "Writing connections"},
 			{ID: "connections_waiting", Name: "Waiting connections"},

@@ -1,9 +1,11 @@
 package nginxvts
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/netdata/go.d.plugin/pkg/web"
@@ -21,10 +23,10 @@ func newAPIClient(client *http.Client, request web.Request) *apiClient {
 	}
 }
 
-func (api *apiClient) getVtsStatus() ([]byte, error) {
+func (api *apiClient) getVtsStatus() (VTSData, error) {
 	req, err := web.NewHTTPRequest(api.request)
 	if err != nil {
-		return nil, fmt.Errorf("error on creating request : %v", err)
+		return VTSData{}, fmt.Errorf("error on creating request : %v", err)
 	}
 	resp, err := api.doRequestOK(req)
 	defer closeBody(resp)
@@ -33,7 +35,13 @@ func (api *apiClient) getVtsStatus() ([]byte, error) {
 	if err != nil {
 		fmt.Println("ioutil.ReadAll failed", err)
 	}
-	return data, nil
+
+	var vtsData VTSData
+	err = json.Unmarshal(data, &vtsData)
+	if err != nil {
+		log.Println("json.Unmarshal failed", err)
+	}
+	return vtsData, nil
 
 }
 

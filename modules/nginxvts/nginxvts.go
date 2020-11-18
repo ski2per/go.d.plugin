@@ -11,7 +11,7 @@ import (
 
 const (
 	// defaultURL         = "http://127.0.0.1/status/format/json"
-	defaultURL         = "http://10.0.0.110/status/format/json"
+	defaultURL         = "http://10.0.0.110:8888/status/format/json"
 	defaultHTTPTimeout = time.Second
 )
 

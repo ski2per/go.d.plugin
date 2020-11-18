@@ -19,7 +19,7 @@ func (nv *NginxVTS) collect() (map[string]int64, error) {
 		log.Println("json.Unmarshal failed", err)
 	}
 
-	// return stm.ToMap(vtsData.Connections), nil
+	fmt.Printf("%+v\n\n", vtsData)
 	tmp := stm.ToMap(vtsData)
 	fmt.Println(tmp)
 	// return stm.ToMap(vtsData), nil

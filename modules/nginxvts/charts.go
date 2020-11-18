@@ -11,7 +11,7 @@ type (
 
 var nginxVtsMainCharts = Charts{
 	{
-		ID:    "vts_conn",
+		ID:    "vtsconn",
 		Title: "Active Client Connections Including Waiting Connections",
 		Units: "connections",
 		Fam:   "connections",

@@ -3,30 +3,27 @@ package nginxvts
 import "github.com/netdata/go.d.plugin/agent/module"
 
 type (
-	// Chart is an alias for module.Chart
-	Chart = module.Chart
 	// Charts is an alias for module.Charts
 	Charts = module.Charts
-	// Dim is an alias for module.Dim
-	Dim = module.Dim
 	// Dims is an alias for module.Dims
 	Dims = module.Dims
 )
 
-var charts = Charts{
+var nginxVtsMainCharts = Charts{
 	{
-		ID:    "connections",
+		ID:    "vts_conn",
 		Title: "Active Client Connections Including Waiting Connections",
 		Units: "connections",
 		Fam:   "connections",
 		Ctx:   "nginx.connections",
+		Dims: Dims{
+			{ID: "connections_active", Name: "Active connections"},
+			{ID: "connections_reading", Name: "Reading connections"},
+			{ID: "connections_writing", Name: "Writing connections"},
+			{ID: "connections_waiting", Name: "Waiting connections"},
+			{ID: "connections_accepted", Name: "Accepted connections"},
+			{ID: "connections_handled", Name: "Handled connections"},
+			{ID: "connections_requests", Name: "Requests connections"},
+		},
 	},
-}
-
-var nginxInfoChart = Chart{
-	ID:    "nginx_info",
-	Title: "Nginx Info",
-	Units: "string",
-	Fam:   "nginx_vts",
-	Ctx:   "vts.info",
 }

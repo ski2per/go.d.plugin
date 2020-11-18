@@ -1,6 +1,7 @@
 package nginxvts
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/netdata/go.d.plugin/pkg/web"
@@ -32,6 +33,7 @@ type NginxVTS struct {
 	Config `yaml:",inline"`
 
 	apiClient *apiClient
+	charts    *module.Charts
 }
 
 // New creates Nginx with default values.
@@ -55,6 +57,7 @@ func (NginxVTS) Cleanup() {}
 
 // Init makes initialization.
 func (nv *NginxVTS) Init() bool {
+	fmt.Println("++++++++++++++++++++++ Init()")
 	if nv.URL == "" {
 		nv.Error("URL not set")
 		return false
@@ -71,17 +74,33 @@ func (nv *NginxVTS) Init() bool {
 	nv.Debugf("using URL %s", nv.URL)
 	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
 
+	//Init charts
+	charts, err := nv.initCharts()
+	if err != nil {
+		nv.Errorf("charts init: %v", err)
+		return false
+	}
+	nv.charts = charts
+
 	return true
 }
 
 // Check makes check.
-func (nv *NginxVTS) Check() bool { return len(nv.Collect()) > 0 }
+func (nv *NginxVTS) Check() bool {
+	fmt.Println("++++++++++++++++++++++ Check()")
+	fmt.Println(len(nv.Collect()))
+	return len(nv.Collect()) > 0
+}
 
 // Charts creates Charts.
-func (NginxVTS) Charts() *Charts { return charts.Copy() }
+func (nv *NginxVTS) Charts() *Charts {
+	fmt.Println("++++++++++++++++++++++ Charts()")
+	return nv.charts
+}
 
 // Collect collects metrics.
 func (nv *NginxVTS) Collect() map[string]int64 {
+	fmt.Println("++++++++++++++++++++++ Collect()")
 	mx, err := nv.collect()
 
 	if err != nil {

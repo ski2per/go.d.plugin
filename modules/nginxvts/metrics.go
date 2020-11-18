@@ -14,10 +14,10 @@ type VTSData struct {
 		Handled  int64 `stm:"handled" json:"handled"`
 		Requests int64 `stm:"requests" json:"requests"`
 	} `stm:"connections" json:"connections"`
-	ServerZones   map[string]Server              `json:"serverZones"`
-	UpstreamZones map[string][]Upstream          `json:"upstreamZones"`
-	FilterZones   map[string]map[string]Upstream `json:"filterZones"`
-	CacheZones    map[string]Cache               `json:"cacheZones"`
+	// ServerZones   map[string]Server              `json:"serverZones"`
+	// UpstreamZones map[string][]Upstream          `json:"upstreamZones"`
+	// FilterZones   map[string]map[string]Upstream `json:"filterZones"`
+	// CacheZones    map[string]Cache               `json:"cacheZones"`
 }
 
 type Server struct {

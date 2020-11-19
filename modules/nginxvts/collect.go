@@ -2,7 +2,6 @@ package nginxvts
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/netdata/go.d.plugin/pkg/stm"
 )
@@ -11,7 +10,6 @@ func (nv *NginxVTS) collect() (map[string]int64, error) {
 	// collected := make(map[string]int64)
 
 	data, err := nv.apiClient.getVtsStatus()
-	fmt.Printf("%+v\n", data)
 	if err != nil {
 		return make(map[string]int64), errors.New("get vts status error")
 	}

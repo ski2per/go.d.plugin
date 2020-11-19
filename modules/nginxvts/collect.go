@@ -11,13 +11,14 @@ func (nv *NginxVTS) collect() (map[string]int64, error) {
 	// collected := make(map[string]int64)
 
 	data, err := nv.apiClient.getVtsStatus()
+	fmt.Printf("%+v\n", data)
 	if err != nil {
 		return make(map[string]int64), errors.New("get vts status error")
 	}
 
-	fmt.Printf("%+v\n\n", data)
+	// fmt.Printf("%+v\n\n", data)
 	tmp := stm.ToMap(data)
-	fmt.Println(tmp)
+	// fmt.Println(tmp)
 	// return stm.ToMap(vtsData), nil
 	return tmp, nil
 }

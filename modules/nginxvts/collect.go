@@ -37,18 +37,27 @@ func (nv *Nginxvts) addServerZonesCharts(ms *vtsStatus) {
 	}
 
 	for server := range ms.ServerZones {
-		chart := nginxVtsServerZonesChart.Copy()
-		chart.ID = fmt.Sprintf(chart.ID, server)
-
-		for _, dim := range chart.Dims {
-			newDimID := fmt.Sprintf(dim.ID, server)
-			dim.ID = newDimID
-
-			// 	collected[newDimID] = value.
-			// }
-
-			_ = nv.charts.Add(chart)
-			// fmt.Println(server, value)
+		charts := nginxVtsServerZonesCharts.Copy()
+		for _, chart := range *charts {
+			chart.ID = fmt.Sprintf(chart.ID, replaceString(server))
+			for _, dim := range chart.Dims {
+				dim.ID = fmt.Sprintf(dim.ID, replaceString(server))
+				// fmt.Println(dim.ID)
+			}
 		}
+
+		// fmt.Printf("\n\n\n%+v\n\n\n", *charts)
+		_ = nv.charts.Add(*charts...)
+	}
+}
+
+func replaceString(id string) string {
+	switch id {
+	case "*":
+		return "all"
+	case "_":
+		return "default"
+	default:
+		return id
 	}
 }

@@ -26,10 +26,10 @@ func (v vtsStatus) hasFilterZones() bool   { return v.FilterZones != nil }
 func (v vtsStatus) hasCacheZones() bool    { return v.CacheZones != nil }
 
 type Server struct {
-	RequestCounter uint64 `json:"requestCounter"`
-	InBytes        uint64 `json:"inBytes"`
-	OutBytes       uint64 `json:"outBytes"`
-	RequestMsec    uint64 `json:"requestMsec"`
+	RequestCounter int64 `stm:"requestcounter" json:"requestCounter"`
+	InBytes        int64 `stm:"inbytes" json:"inBytes"`
+	OutBytes       int64 `stm:"outbytes" json:"outBytes"`
+	RequestMsec    int64 `json:"requestMsec"`
 	Responses      struct {
 		OneXx       int64  `stm:"1xx" json:"1xx"`
 		TwoXx       int64  `stm:"2xx" json:"2xx"`
@@ -44,7 +44,7 @@ type Server struct {
 		Revalidated uint64 `json:"revalidated"`
 		Hit         uint64 `json:"hit"`
 		Scarce      uint64 `json:"scarce"`
-	} `stm:"" json:"responses"`
+	} `stm:"responses" json:"responses"`
 	OverCounts struct {
 		MaxIntegerSize float64 `json:"maxIntegerSize"`
 		RequestCounter uint64  `json:"requestCounter"`

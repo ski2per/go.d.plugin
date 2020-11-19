@@ -29,17 +29,31 @@ var nginxVtsMainCharts = Charts{
 	},
 }
 
-var nginxVtsServerZonesChart = Chart{
-	ID:    "%s",
-	Title: "Number of responses, later",
-	Units: "int64",
-	Fam:   "serverzones",
-	Ctx:   "nginxvts.servername",
-	Dims: Dims{
-		{ID: "serverzones_%s_1xx", Name: "HTTP 1xx"},
-		{ID: "serverzones_%s_2xx", Name: "HTTP 2xx"},
-		{ID: "serverzones_%s_3xx", Name: "HTTP 3xx"},
-		{ID: "serverzones_%s_4xx", Name: "HTTP 4xx"},
-		{ID: "serverzones_%s_5xx", Name: "HTTP 5xx"},
+var nginxVtsServerZonesCharts = Charts{
+	{
+		ID:    "responses_%s",
+		Title: "Response code status.",
+		Units: "number",
+		Fam:   "serverzones",
+		Ctx:   "response_code",
+		Dims: Dims{
+			{ID: "serverzones_%s_responses_1xx", Name: "1xx"},
+			{ID: "serverzones_%s_responses_2xx", Name: "2xx"},
+			{ID: "serverzones_%s_responses_3xx", Name: "3xx"},
+			{ID: "serverzones_%s_responses_4xx", Name: "4xx"},
+			{ID: "serverzones_%s_responses_5xx", Name: "5xx"},
+		},
+	},
+	{
+		ID:    "status_%s",
+		Title: "ServerZone status.",
+		Units: "status",
+		Fam:   "serverzones",
+		Ctx:   "serverzone_status",
+		Dims: Dims{
+			{ID: "serverzones_%s_requestcounter", Name: "requestcounter"},
+			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
+			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
+		},
 	},
 }

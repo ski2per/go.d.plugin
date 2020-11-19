@@ -23,10 +23,10 @@ func newAPIClient(client *http.Client, request web.Request) *apiClient {
 	}
 }
 
-func (api *apiClient) getVtsStatus() (VTSData, error) {
+func (api *apiClient) getVtsStatus() (*vtsStatus, error) {
 	req, err := web.NewHTTPRequest(api.request)
 	if err != nil {
-		return VTSData{}, fmt.Errorf("error on creating request : %v", err)
+		return &vtsStatus{}, fmt.Errorf("error on creating request : %v", err)
 	}
 	resp, err := api.doRequestOK(req)
 	defer closeBody(resp)
@@ -36,12 +36,12 @@ func (api *apiClient) getVtsStatus() (VTSData, error) {
 		fmt.Println("ioutil.ReadAll failed", err)
 	}
 
-	var vtsData VTSData
-	err = json.Unmarshal(data, &vtsData)
+	var vts vtsStatus
+	err = json.Unmarshal(data, &vts)
 	if err != nil {
 		log.Println("json.Unmarshal failed", err)
 	}
-	return vtsData, nil
+	return &vts, nil
 
 }
 

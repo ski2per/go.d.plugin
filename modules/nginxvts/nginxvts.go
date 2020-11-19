@@ -29,16 +29,16 @@ type Config struct {
 }
 
 // Nginx nginx module.
-type NginxVTS struct {
+type Nginxvts struct {
 	module.Base
 	Config `yaml:",inline"`
 
 	apiClient *apiClient
-	// charts    *module.Charts
+	charts    *module.Charts
 }
 
 // New creates Nginx with default values.
-func New() *NginxVTS {
+func New() *Nginxvts {
 	config := Config{
 		HTTP: web.HTTP{
 			Request: web.Request{
@@ -50,14 +50,14 @@ func New() *NginxVTS {
 		},
 	}
 
-	return &NginxVTS{Config: config}
+	return &Nginxvts{Config: config}
 }
 
 // Cleanup makes cleanup.
-func (NginxVTS) Cleanup() {}
+func (Nginxvts) Cleanup() {}
 
 // Init makes initialization.
-func (nv *NginxVTS) Init() bool {
+func (nv *Nginxvts) Init() bool {
 	if nv.URL == "" {
 		nv.Error("URL not set")
 		return false
@@ -75,29 +75,29 @@ func (nv *NginxVTS) Init() bool {
 	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
 
 	//Init charts
-	// charts, err := nv.initCharts()
+	charts, err := nv.initCharts()
 	if err != nil {
 		nv.Errorf("charts init: %v", err)
 		return false
 	}
-	// nv.charts = charts
+	nv.charts = charts
 
 	return true
 }
 
 // Check makes check.
-func (nv *NginxVTS) Check() bool {
+func (nv *Nginxvts) Check() bool {
 	return len(nv.Collect()) > 0
 }
 
 // Charts creates Charts.
-func (NginxVTS) Charts() *Charts {
-	return nginxVtsMainCharts.Copy()
-	// return nv.charts
+func (nv Nginxvts) Charts() *Charts {
+	// return nginxVtsMainCharts.Copy()
+	return nv.charts
 }
 
 // Collect collects metrics.
-func (nv *NginxVTS) Collect() map[string]int64 {
+func (nv *Nginxvts) Collect() map[string]int64 {
 	mx, err := nv.collect()
 
 	if err != nil {

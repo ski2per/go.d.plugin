@@ -28,8 +28,8 @@ type Config struct {
 	web.HTTP `yaml:",inline"`
 }
 
-// Nginx nginx module.
-type Nginxvts struct {
+// NginxVts module.
+type NginxVts struct {
 	module.Base
 	Config `yaml:",inline"`
 
@@ -38,7 +38,7 @@ type Nginxvts struct {
 }
 
 // New creates Nginx with default values.
-func New() *Nginxvts {
+func New() *NginxVts {
 	config := Config{
 		HTTP: web.HTTP{
 			Request: web.Request{
@@ -50,14 +50,14 @@ func New() *Nginxvts {
 		},
 	}
 
-	return &Nginxvts{Config: config}
+	return &NginxVts{Config: config}
 }
 
 // Cleanup makes cleanup.
-func (Nginxvts) Cleanup() {}
+func (NginxVts) Cleanup() {}
 
 // Init makes initialization.
-func (nv *Nginxvts) Init() bool {
+func (nv *NginxVts) Init() bool {
 	if nv.URL == "" {
 		nv.Error("URL not set")
 		return false
@@ -86,18 +86,18 @@ func (nv *Nginxvts) Init() bool {
 }
 
 // Check makes check.
-func (nv *Nginxvts) Check() bool {
+func (nv *NginxVts) Check() bool {
 	return len(nv.Collect()) > 0
 }
 
 // Charts creates Charts.
-func (nv Nginxvts) Charts() *Charts {
+func (nv NginxVts) Charts() *Charts {
 	// return nginxVtsMainCharts.Copy()
 	return nv.charts
 }
 
 // Collect collects metrics.
-func (nv *Nginxvts) Collect() map[string]int64 {
+func (nv *NginxVts) Collect() map[string]int64 {
 	mx, err := nv.collect()
 
 	if err != nil {

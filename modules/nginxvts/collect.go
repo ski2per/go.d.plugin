@@ -7,7 +7,7 @@ import (
 	"github.com/netdata/go.d.plugin/pkg/stm"
 )
 
-func (nv *Nginxvts) collect() (map[string]int64, error) {
+func (nv *NginxVts) collect() (map[string]int64, error) {
 	ms, err := nv.apiClient.getVtsStatus()
 	// fmt.Printf("%+v\n", ms)
 	if err != nil {
@@ -31,7 +31,7 @@ func (nv *Nginxvts) collect() (map[string]int64, error) {
 
 // func (Nginxvts) collectServerZonesStatus(collected map[string]int64, ms *vtsStatus) { }
 
-func (nv *Nginxvts) addServerZonesCharts(ms *vtsStatus) {
+func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus) {
 	if !ms.hasServerZones() {
 		return
 	}
@@ -40,9 +40,9 @@ func (nv *Nginxvts) addServerZonesCharts(ms *vtsStatus) {
 		charts := nginxVtsServerZonesCharts.Copy()
 		for _, chart := range *charts {
 			chart.ID = fmt.Sprintf(chart.ID, server)
+			chart.Fam = server
 			for _, dim := range chart.Dims {
 				dim.ID = fmt.Sprintf(dim.ID, server)
-				// fmt.Println(dim.ID)
 			}
 		}
 

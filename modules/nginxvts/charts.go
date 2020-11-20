@@ -33,9 +33,9 @@ var nginxVtsServerZonesCharts = Charts{
 	{
 		ID:    "responses_%s",
 		Title: "Response code status.",
-		Units: "number",
+		Units: "code",
 		Fam:   "serverzones",
-		Ctx:   "response_code",
+		Ctx:   "nginxvts.responses",
 		Dims: Dims{
 			{ID: "serverzones_%s_responses_1xx", Name: "1xx"},
 			{ID: "serverzones_%s_responses_2xx", Name: "2xx"},
@@ -47,9 +47,9 @@ var nginxVtsServerZonesCharts = Charts{
 	{
 		ID:    "status_%s",
 		Title: "ServerZone status.",
-		Units: "status",
+		Units: "bytes",
 		Fam:   "serverzones",
-		Ctx:   "serverzone_status",
+		Ctx:   "nginxvts.status",
 		Dims: Dims{
 			{ID: "serverzones_%s_requestcounter", Name: "requestcounter"},
 			{ID: "serverzones_%s_inbytes", Name: "inbytes"},

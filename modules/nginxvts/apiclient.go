@@ -26,9 +26,12 @@ func newAPIClient(client *http.Client, request web.Request) *apiClient {
 func (api *apiClient) getVtsStatus() (*vtsStatus, error) {
 	req, err := web.NewHTTPRequest(api.request)
 	if err != nil {
-		return &vtsStatus{}, fmt.Errorf("error on creating request : %v", err)
+		return nil, fmt.Errorf("error on creating request : %v", err)
 	}
 	resp, err := api.doRequestOK(req)
+	if err != nil {
+		return nil, err
+	}
 	defer closeBody(resp)
 
 	data, err := ioutil.ReadAll(resp.Body)

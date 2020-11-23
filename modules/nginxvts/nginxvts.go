@@ -9,9 +9,7 @@ import (
 )
 
 const (
-	// defaultURL = "http://127.0.0.1/status/format/json"
-	// defaultURL         = "http://10.0.0.110/status/format/json"
-	defaultURL         = "http://172.16.66.6/status/format/json"
+	defaultURL         = "http://127.0.0.1/status/format/json"
 	defaultHTTPTimeout = time.Second
 )
 
@@ -23,7 +21,7 @@ func init() {
 	module.Register("nginxvts", creator)
 }
 
-// Config is the Nginx module configuration.
+// Config is the NginxVts module configuration.
 type Config struct {
 	web.HTTP `yaml:",inline"`
 }
@@ -37,7 +35,7 @@ type NginxVts struct {
 	charts    *module.Charts
 }
 
-// New creates Nginx with default values.
+// New creates NginxVts with default values.
 func New() *NginxVts {
 	config := Config{
 		HTTP: web.HTTP{

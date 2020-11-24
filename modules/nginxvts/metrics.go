@@ -1,19 +1,25 @@
 package nginxvts
 
 type vtsStatus struct {
-	HostName     string `json:"hostName"`
-	NginxVersion string `json:"nginxVersion"`
-	LoadMsec     int64  `json:"loadMsec"`
-	NowMsec      int64  `json:"nowMsec"`
+	HostName     string //`json:"hostName"`
+	NginxVersion string //`json:"nginxVersion"`
+	LoadMsec     int64  //`json:"loadMsec"`
+	NowMsec      int64  //`json:"nowMsec"`
 	Connections  struct {
-		Active   int64 `stm:"active" json:"active"`
-		Reading  int64 `stm:"reading" json:"reading"`
-		Writing  int64 `stm:"writing" json:"writing"`
-		Waiting  int64 `stm:"waiting" json:"waiting"`
-		Accepted int64 `stm:"accepted" json:"accepted"`
-		Handled  int64 `stm:"handled" json:"handled"`
-		Requests int64 `stm:"requests" json:"requests"`
-	} `stm:"connections" json:"connections"`
+		Active   int64 `stm:"active"`
+		Reading  int64 `stm:"reading"`
+		Writing  int64 `stm:"writing"`
+		Waiting  int64 `stm:"waiting"`
+		Accepted int64 `stm:"accepted"`
+		Handled  int64 `stm:"handled"`
+		Request  int64 `stm:"requests"`
+	} `stm:"connections"`
+	SharedZones struct {
+		Name     string
+		MaxSize  int64 `stm:"maxsize"`
+		UsedSize int64 `stm:"usedsize"`
+		UsedNode int64 `stm:"usednode"`
+	} `stm:"sharedzones" json:"sharedZones"`
 	ServerZones   map[string]Server              `stm:"serverzones" json:"serverZones"`
 	UpstreamZones map[string][]Upstream          `json:"upstreamZones"`
 	FilterZones   map[string]map[string]Upstream `json:"filterZones"`

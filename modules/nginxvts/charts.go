@@ -5,15 +5,26 @@ import "github.com/netdata/go.d.plugin/agent/module"
 type (
 	// Charts is an alias for module.Charts
 	Charts = module.Charts
-	Chart  = module.Chart
+	// Chart is an alias for module.Chart
+	Chart = module.Chart
 	// Dims is an alias for module.Dims
 	Dims = module.Dims
 )
 
 var nginxVtsMainCharts = Charts{
 	{
+		ID:    "nginx_version",
+		Title: "Nginx version",
+		Units: "version",
+		Fam:   "main",
+		Ctx:   "nginxvts.main",
+		Dims: Dims{
+			{ID: "nginxversion", Name: "nginx version"},
+		},
+	},
+	{
 		ID:    "connections",
-		Title: "Active Client Connections Including Waiting Connections",
+		Title: "Total connections and requests",
 		Units: "connections",
 		Fam:   "main",
 		Ctx:   "nginxvts.connections",
@@ -25,6 +36,19 @@ var nginxVtsMainCharts = Charts{
 			{ID: "connections_accepted", Name: "Accepted connections"},
 			{ID: "connections_handled", Name: "Handled connections"},
 			{ID: "connections_requests", Name: "Requests connections"},
+		},
+	},
+}
+
+var nginxVtsSharedZonesChart = Charts{
+	{
+		ID:    "name",
+		Title: "Shared memory information",
+		Units: "name",
+		Fam:   "name",
+		Ctx:   "nginxvts.sharedzones",
+		Dims: Dims{
+			{ID: "sharedzones_name", Name: "share"},
 		},
 	},
 }

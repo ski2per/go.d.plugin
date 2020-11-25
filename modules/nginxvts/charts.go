@@ -13,16 +13,6 @@ type (
 
 var nginxVtsMainCharts = Charts{
 	{
-		ID:    "nginx_version",
-		Title: "Nginx version",
-		Units: "version",
-		Fam:   "main",
-		Ctx:   "nginxvts.main",
-		Dims: Dims{
-			{ID: "nginxversion", Name: "nginx version"},
-		},
-	},
-	{
 		ID:    "connections",
 		Title: "Total connections and requests",
 		Units: "connections",

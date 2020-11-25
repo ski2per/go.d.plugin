@@ -32,44 +32,44 @@ func (v vtsStatus) hasFilterZones() bool   { return v.FilterZones != nil }
 func (v vtsStatus) hasCacheZones() bool    { return v.CacheZones != nil }
 
 type Server struct {
-	RequestCounter int64 `stm:"requestcounter" json:"requestCounter"`
-	InBytes        int64 `stm:"inbytes" json:"inBytes"`
-	OutBytes       int64 `stm:"outbytes" json:"outBytes"`
-	RequestMsec    int64 `json:"requestMsec"`
+	RequestCounter int64 `stm:"requestcounter"`
+	InBytes        int64 `stm:"inbytes"`
+	OutBytes       int64 `stm:"outbytes"`
+	RequestMsec    int64
 	Responses      struct {
-		OneXx       int64  `stm:"1xx" json:"1xx"`
-		TwoXx       int64  `stm:"2xx" json:"2xx"`
-		ThreeXx     int64  `stm:"3xx" json:"3xx"`
-		FourXx      int64  `stm:"4xx" json:"4xx"`
-		FiveXx      int64  `stm:"5xx" json:"5xx"`
-		Miss        uint64 `json:"miss"`
-		Bypass      uint64 `json:"bypass"`
-		Expired     uint64 `json:"expired"`
-		Stale       uint64 `json:"stale"`
-		Updating    uint64 `json:"updating"`
-		Revalidated uint64 `json:"revalidated"`
-		Hit         uint64 `json:"hit"`
-		Scarce      uint64 `json:"scarce"`
+		OneXx       int64 `stm:"1xx" json:"1xx"`
+		TwoXx       int64 `stm:"2xx" json:"2xx"`
+		ThreeXx     int64 `stm:"3xx" json:"3xx"`
+		FourXx      int64 `stm:"4xx" json:"4xx"`
+		FiveXx      int64 `stm:"5xx" json:"5xx"`
+		Miss        uint64
+		Bypass      uint64
+		Expired     uint64
+		Stale       uint64
+		Updating    uint64
+		Revalidated uint64
+		Hit         uint64
+		Scarce      uint64
 	} `stm:"responses" json:"responses"`
 	OverCounts struct {
-		MaxIntegerSize float64 `json:"maxIntegerSize"`
-		RequestCounter uint64  `json:"requestCounter"`
-		InBytes        uint64  `json:"inBytes"`
-		OutBytes       uint64  `json:"outBytes"`
-		OneXx          uint64  `json:"1xx"`
-		TwoXx          uint64  `json:"2xx"`
-		ThreeXx        uint64  `json:"3xx"`
-		FourXx         uint64  `json:"4xx"`
-		FiveXx         uint64  `json:"5xx"`
-		Miss           uint64  `json:"miss"`
-		Bypass         uint64  `json:"bypass"`
-		Expired        uint64  `json:"expired"`
-		Stale          uint64  `json:"stale"`
-		Updating       uint64  `json:"updating"`
-		Revalidated    uint64  `json:"revalidated"`
-		Hit            uint64  `json:"hit"`
-		Scarce         uint64  `json:"scarce"`
-	} `json:"overCounts"`
+		MaxIntegerSize float64
+		RequestCounter uint64
+		InBytes        uint64
+		OutBytes       uint64
+		OneXx          uint64
+		TwoXx          uint64
+		ThreeXx        uint64
+		FourXx         uint64
+		FiveXx         uint64
+		Miss           uint64
+		Bypass         uint64
+		Expired        uint64
+		Stale          uint64
+		Updating       uint64
+		Revalidated    uint64
+		Hit            uint64
+		Scarce         uint64
+	}
 }
 
 type Upstream struct {

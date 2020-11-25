@@ -40,12 +40,10 @@ func (api *apiClient) getVtsStatus() (*vtsStatus, error) {
 	}
 
 	var vts vtsStatus
-	fmt.Println(data)
 	err = json.Unmarshal(data, &vts)
 	if err != nil {
 		log.Println("json.Unmarshal failed", err)
 	}
-	fmt.Printf("%+v\n", vts)
 	return &vts, nil
 
 }

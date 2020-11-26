@@ -22,8 +22,8 @@ type vtsStatus struct {
 	} `stm:"sharedzones" json:"sharedZones"`
 	ServerZones   map[string]Server
 	UpstreamZones map[string][]Upstream
-	FilterZones   map[string]map[string]Upstream `json:"filterZones"`
-	CacheZones    map[string]Cache               `json:"cacheZones"`
+	FilterZones   map[string]map[string]Server `json:"filterZones"`
+	CacheZones    map[string]Cache             `json:"cacheZones"`
 }
 
 func (v vtsStatus) hasServerZones() bool   { return v.ServerZones != nil }

@@ -70,6 +70,17 @@ var nginxVtsServerZonesCharts = Charts{
 		},
 	},
 	{
+		ID:    "io_%s",
+		Title: "ServerZones IO",
+		Units: "bytes",
+		Fam:   "serverzones",
+		Ctx:   "nginxvts.serverzones.io",
+		Dims: Dims{
+			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
+			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
+		},
+	},
+	{
 		ID:    "cache_%s",
 		Title: "ServerZones cache",
 		Units: "number",
@@ -84,17 +95,6 @@ var nginxVtsServerZonesCharts = Charts{
 			{ID: "serverzones_%s_responses_revalidated", Name: "revalidated"},
 			{ID: "serverzones_%s_responses_hit", Name: "Hit"},
 			{ID: "serverzones_%s_responses_scarce", Name: "Scarce"},
-		},
-	},
-	{
-		ID:    "io_%s",
-		Title: "ServerZones IO",
-		Units: "bytes",
-		Fam:   "serverzones",
-		Ctx:   "nginxvts.serverzones.io",
-		Dims: Dims{
-			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
-			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
 		},
 	},
 }
@@ -146,6 +146,48 @@ var nginxVtsFilterZonesCharts = Charts{
 		Ctx:   "nginxvts.filterzones.requests",
 		Dims: Dims{
 			{ID: "filterzones_%s_requestcounter", Name: "Requests"},
+		},
+	},
+	{
+		ID:    "responses_%s",
+		Title: "FilterZones response code",
+		Units: "number",
+		Fam:   "filterzones",
+		Ctx:   "nginxvts.filterzones.responses",
+		Dims: Dims{
+			{ID: "filterzones_%s_responses_1xx", Name: "1xx"},
+			{ID: "filterzones_%s_responses_2xx", Name: "2xx"},
+			{ID: "filterzones_%s_responses_3xx", Name: "3xx"},
+			{ID: "filterzones_%s_responses_4xx", Name: "4xx"},
+			{ID: "filterzones_%s_responses_5xx", Name: "5xx"},
+		},
+	},
+	{
+		ID:    "io_%s",
+		Title: "FilterZones IO",
+		Units: "bytes",
+		Fam:   "filterzones",
+		Ctx:   "nginxvts.filterzones.io",
+		Dims: Dims{
+			{ID: "filterzones_%s_inbytes", Name: "inbytes"},
+			{ID: "filterzones_%s_outbytes", Name: "outbytes"},
+		},
+	},
+	{
+		ID:    "cache_%s",
+		Title: "FilterZones cache",
+		Units: "number",
+		Fam:   "filterzones",
+		Ctx:   "nginxvts.filterzones.cache",
+		Dims: Dims{
+			{ID: "filterzones_%s_responses_miss", Name: "Miss"},
+			{ID: "filterzones_%s_responses_bypass", Name: "Bypass"},
+			{ID: "filterzones_%s_responses_expired", Name: "Expired"},
+			{ID: "filterzones_%s_responses_stale", Name: "Stale"},
+			{ID: "filterzones_%s_responses_updating", Name: "Updating"},
+			{ID: "filterzones_%s_responses_revalidated", Name: "revalidated"},
+			{ID: "filterzones_%s_responses_hit", Name: "Hit"},
+			{ID: "filterzones_%s_responses_scarce", Name: "Scarce"},
 		},
 	},
 }

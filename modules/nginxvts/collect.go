@@ -21,7 +21,7 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 	// nv.addUpstreamZonesCharts(ms, collected)
 	nv.addFilterZonesCharts(ms, collected)
 
-	// fmt.Printf("%+v\n\n", collected)
+	// fmt.Printf("\n\n\n%+v\n\n", collected)
 	// tmp := stm.ToMap(ms)
 	tmp := stm.ToMap(collected)
 
@@ -63,12 +63,13 @@ func (nv *NginxVts) addUpstreamZonesCharts(stat *vtsStatus, collected map[string
 	}
 
 	upstreamMap := make(map[string]Upstream)
+
 	for upstreamKey, upstreamList := range stat.UpstreamZones {
 		for _, upstream := range upstreamList {
-			charts := nginxVtsUpstreamZonesCharts.Copy()
 			mergedKey := fmt.Sprintf("%s:%s", upstreamKey, upstream.Server)
-
 			upstreamMap[mergedKey] = upstream
+
+			charts := nginxVtsUpstreamZonesCharts.Copy()
 			for _, chart := range *charts {
 				chart.ID = fmt.Sprintf(chart.ID, mergedKey)
 				chart.Fam = upstream.Server
@@ -87,14 +88,23 @@ func (nv *NginxVts) addFilterZonesCharts(stat *vtsStatus, collected map[string]i
 		return
 	}
 
-	for k0, upstreamMap := range stat.FilterZones {
-		for k1, upstream := range upstreamMap {
+	filterMap := make(map[string]Server)
+
+	for filter, serverMap := range stat.FilterZones {
+		for group, upstream := range serverMap {
+			mergedKey := fmt.Sprintf("%s%s", filter, group)
+			filterMap[mergedKey] = upstream
+
 			charts := nginxVtsFilterZonesCharts.Copy()
-			mergedKey = fmt.Sprintf("%s%s",k0, k1)
 			for _, chart := range *charts {
 				chart.ID = fmt.Sprintf(chart.ID, mergedKey)
-				chart.Fam =
+				chart.Fam = filter
+				for _, dim := range chart.Dims {
+					dim.ID = fmt.Sprintf(dim.ID, mergedKey)
+				}
 			}
+			_ = nv.charts.Add(*charts...)
 		}
 	}
+	collected["filterzones"] = filterMap
 }

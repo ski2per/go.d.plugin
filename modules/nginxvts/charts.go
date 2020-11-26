@@ -19,8 +19,8 @@ var nginxVtsMainCharts = Charts{
 		Fam:   "main",
 		Ctx:   "nginxvts.main",
 		Dims: Dims{
-			{ID: "loadmsec", Name: "Start time", Algo: module.Incremental},
-			{ID: "nowmsec", Name: "Up time", Algo: module.Incremental},
+			{ID: "loadmsec", Name: "Start time"},
+			{ID: "nowmsec", Name: "Up time"},
 		},
 	},
 	{

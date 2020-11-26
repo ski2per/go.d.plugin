@@ -1,10 +1,10 @@
 package nginxvts
 
 type vtsStatus struct {
-	HostName     string //`json:"hostName"`
-	NginxVersion string //`json:"nginxVersion"`
-	LoadMsec     int64  `stm:"loadmsec" json:"loadMsec"`
-	NowMsec      int64  `stm:"nowmsec" json:"nowMsec"`
+	HostName     string
+	NginxVersion string
+	LoadMsec     int64
+	NowMsec      int64
 	Connections  struct {
 		Active   int64 `stm:"active"`
 		Reading  int64 `stm:"reading"`
@@ -20,8 +20,8 @@ type vtsStatus struct {
 		UsedSize int64 `stm:"usedsize"`
 		UsedNode int64 `stm:"usednode"`
 	} `stm:"sharedzones" json:"sharedZones"`
-	ServerZones   map[string]Server              `stm:"serverzones" json:"serverZones"`
-	UpstreamZones map[string][]Upstream          `json:"upstreamZones"`
+	ServerZones   map[string]Server
+	UpstreamZones map[string][]Upstream
 	FilterZones   map[string]map[string]Upstream `json:"filterZones"`
 	CacheZones    map[string]Cache               `json:"cacheZones"`
 }
@@ -53,35 +53,17 @@ type Server struct {
 }
 
 type Upstream struct {
-	Server         string `json:"server"`
-	RequestCounter uint64 `json:"requestCounter"`
-	InBytes        uint64 `json:"inBytes"`
-	OutBytes       uint64 `json:"outBytes"`
+	Server         string
+	RequestCounter int64 `stm:"requestcounter"`
+	InBytes        int64 `stm:"inbytes"`
+	OutBytes       int64 `stm:"outbytes"`
 	Responses      struct {
-		OneXx   uint64 `json:"1xx"`
-		TwoXx   uint64 `json:"2xx"`
-		ThreeXx uint64 `json:"3xx"`
-		FourXx  uint64 `json:"4xx"`
-		FiveXx  uint64 `json:"5xx"`
-	} `json:"responses"`
-	ResponseMsec uint64 `json:"responseMsec"`
-	RequestMsec  uint64 `json:"requestMsec"`
-	Weight       uint64 `json:"weight"`
-	MaxFails     uint64 `json:"maxFails"`
-	FailTimeout  uint64 `json:"failTimeout"`
-	Backup       bool   `json:"backup"`
-	Down         bool   `json:"down"`
-	OverCounts   struct {
-		MaxIntegerSize float64 `json:"maxIntegerSize"`
-		RequestCounter uint64  `json:"requestCounter"`
-		InBytes        uint64  `json:"inBytes"`
-		OutBytes       uint64  `json:"outBytes"`
-		OneXx          uint64  `json:"1xx"`
-		TwoXx          uint64  `json:"2xx"`
-		ThreeXx        uint64  `json:"3xx"`
-		FourXx         uint64  `json:"4xx"`
-		FiveXx         uint64  `json:"5xx"`
-	} `json:"overCounts"`
+		OneXx   int64 `stm:"1xx" json:"1xx"`
+		TwoXx   int64 `stm:"2xx" json:"2xx"`
+		ThreeXx int64 `stm:"3xx" json:"3xx"`
+		FourXx  int64 `stm:"4xx" json:"4xx"`
+		FiveXx  int64 `stm:"5xx" json:"5xx"`
+	} `stm:"responses"`
 }
 
 type Cache struct {

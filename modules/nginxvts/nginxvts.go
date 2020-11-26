@@ -107,6 +107,5 @@ func (nv *NginxVts) Collect() map[string]int64 {
 		nv.Error(err)
 		return nil
 	}
-
 	return mx
 }

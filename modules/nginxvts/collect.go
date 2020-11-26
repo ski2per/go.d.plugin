@@ -7,6 +7,7 @@ import (
 )
 
 func (nv *NginxVts) collect() (map[string]int64, error) {
+	collected := make(map[string]interface{})
 	ms, err := nv.apiClient.getVtsStatus()
 	// fmt.Printf("%+v\n", ms)
 	if err != nil {
@@ -15,29 +16,30 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 		return nil, err
 	}
 
-	nv.addServerZonesCharts(ms)
+	nv.addMainCharts(ms, collected)
+	nv.addServerZonesCharts(ms, collected)
+	nv.addUpstreamZonesCharts(ms, collected)
 
-	// fmt.Printf("%+v\n\n", ms)
-	tmp := stm.ToMap(ms)
+	// fmt.Printf("%+v\n\n", collected)
+	// tmp := stm.ToMap(ms)
+	tmp := stm.ToMap(collected)
 
 	// return stm.ToMap()
 	// fmt.Printf("\n\n\n%+v\n\n\n", tmp)
 	return tmp, nil
 }
 
-// func (Nginxvts) collectMainStatus(collected map[string]int64, ms *vtsStatus) { }
+func (nv *NginxVts) addMainCharts(ms *vtsStatus, collected map[string]interface{}) {
+	collected["loadmsec"] = ms.LoadMsec
+	collected["nowmsec"] = ms.NowMsec
+	collected["connections"] = ms.Connections
+}
 
-// func (Nginxvts) collectServerZonesStatus(collected map[string]int64, ms *vtsStatus) { }
-
-// func (nv *NginxVts) addMainCharts(ms *vtsStatus) {
-// 	charts := nginxVtsMainCharts.Copy()
-// 	_ = nv.charts.Add(*charts...)
-// }
-
-func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus) {
+func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus, collected map[string]interface{}) {
 	if !ms.hasServerZones() {
 		return
 	}
+	collected["serverzones"] = ms.ServerZones
 
 	for server := range ms.ServerZones {
 		charts := nginxVtsServerZonesCharts.Copy()
@@ -52,4 +54,29 @@ func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus) {
 		// fmt.Printf("\n\n\n%+v\n\n\n", *charts)
 		_ = nv.charts.Add(*charts...)
 	}
+}
+
+func (nv *NginxVts) addUpstreamZonesCharts(ms *vtsStatus, collected map[string]interface{}) {
+	if !ms.hasUpstreamZones() {
+		return
+	}
+
+	upstreamMap := make(map[string]Upstream)
+	for upstreamKey, upstreamList := range ms.UpstreamZones {
+		for _, upstream := range upstreamList {
+			charts := nginxVtsUpstreamZonesCharts.Copy()
+			mergedKey := fmt.Sprintf("%s:%s", upstreamKey, upstream.Server)
+
+			upstreamMap[mergedKey] = upstream
+			for _, chart := range *charts {
+				chart.ID = fmt.Sprintf(chart.ID, mergedKey)
+				chart.Fam = upstream.Server
+				for _, dim := range chart.Dims {
+					dim.ID = fmt.Sprintf(dim.ID, mergedKey)
+				}
+			}
+			_ = nv.charts.Add(*charts...)
+		}
+	}
+	collected["upstreamzones"] = upstreamMap
 }

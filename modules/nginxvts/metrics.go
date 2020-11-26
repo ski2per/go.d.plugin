@@ -3,8 +3,8 @@ package nginxvts
 type vtsStatus struct {
 	HostName     string //`json:"hostName"`
 	NginxVersion string //`json:"nginxVersion"`
-	LoadMsec     int64  //`json:"loadMsec"`
-	NowMsec      int64  //`json:"nowMsec"`
+	LoadMsec     int64  `stm:"loadmsec" json:"loadMsec"`
+	NowMsec      int64  `stm:"nowmsec" json:"nowMsec"`
 	Connections  struct {
 		Active   int64 `stm:"active"`
 		Reading  int64 `stm:"reading"`
@@ -35,41 +35,21 @@ type Server struct {
 	RequestCounter int64 `stm:"requestcounter"`
 	InBytes        int64 `stm:"inbytes"`
 	OutBytes       int64 `stm:"outbytes"`
-	RequestMsec    int64
 	Responses      struct {
 		OneXx       int64 `stm:"1xx" json:"1xx"`
 		TwoXx       int64 `stm:"2xx" json:"2xx"`
 		ThreeXx     int64 `stm:"3xx" json:"3xx"`
 		FourXx      int64 `stm:"4xx" json:"4xx"`
 		FiveXx      int64 `stm:"5xx" json:"5xx"`
-		Miss        uint64
-		Bypass      uint64
-		Expired     uint64
-		Stale       uint64
-		Updating    uint64
-		Revalidated uint64
-		Hit         uint64
-		Scarce      uint64
-	} `stm:"responses" json:"responses"`
-	OverCounts struct {
-		MaxIntegerSize float64
-		RequestCounter uint64
-		InBytes        uint64
-		OutBytes       uint64
-		OneXx          uint64
-		TwoXx          uint64
-		ThreeXx        uint64
-		FourXx         uint64
-		FiveXx         uint64
-		Miss           uint64
-		Bypass         uint64
-		Expired        uint64
-		Stale          uint64
-		Updating       uint64
-		Revalidated    uint64
-		Hit            uint64
-		Scarce         uint64
-	}
+		Miss        int64 `stm:"miss"`
+		Bypass      int64 `stm:"bypass"`
+		Expired     int64 `stm:"expired"`
+		Stale       int64 `stm:"stale"`
+		Updating    int64 `stm:"updating"`
+		Revalidated int64 `stm:"revalidated"`
+		Hit         int64 `stm:"hit"`
+		Scarce      int64 `stm:"scarce"`
+	} `stm:"responses"`
 }
 
 type Upstream struct {

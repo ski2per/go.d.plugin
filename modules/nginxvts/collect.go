@@ -15,9 +15,6 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 		return nil, err
 	}
 
-	// collected := make(map[string]int64)
-	// nv.collectServerZonesStatus(collected, ms)
-
 	nv.addServerZonesCharts(ms)
 
 	// fmt.Printf("%+v\n\n", ms)
@@ -31,6 +28,11 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 // func (Nginxvts) collectMainStatus(collected map[string]int64, ms *vtsStatus) { }
 
 // func (Nginxvts) collectServerZonesStatus(collected map[string]int64, ms *vtsStatus) { }
+
+// func (nv *NginxVts) addMainCharts(ms *vtsStatus) {
+// 	charts := nginxVtsMainCharts.Copy()
+// 	_ = nv.charts.Add(*charts...)
+// }
 
 func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus) {
 	if !ms.hasServerZones() {

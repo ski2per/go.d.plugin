@@ -13,9 +13,20 @@ type (
 
 var nginxVtsMainCharts = Charts{
 	{
+		ID:    "times",
+		Title: "Nginx running times",
+		Units: "milliseconds",
+		Fam:   "main",
+		Ctx:   "nginxvts.main",
+		Dims: Dims{
+			{ID: "loadmsec", Name: "Start time"},
+			{ID: "nowmsec", Name: "Up time"},
+		},
+	},
+	{
 		ID:    "connections",
 		Title: "Nginx Connections",
-		Units: "No.",
+		Units: "number",
 		Fam:   "main",
 		Ctx:   "nginxvts.main",
 		Dims: Dims{
@@ -30,26 +41,26 @@ var nginxVtsMainCharts = Charts{
 	},
 }
 
-var nginxVtsSharedZonesChart = Charts{
-	{
-		ID:    "name",
-		Title: "Shared memory information",
-		Units: "name",
-		Fam:   "name",
-		Ctx:   "nginxvts.sharedzones",
-		Dims: Dims{
-			{ID: "sharedzones_name", Name: "share"},
-		},
-	},
-}
+// var nginxVtsSharedZonesChart = Charts{
+// }
 
 var nginxVtsServerZonesCharts = Charts{
 	{
-		ID:    "responses_%s",
-		Title: "Response code status.",
-		Units: "code",
+		ID:    "requests_%s",
+		Title: "Total number of client requests",
+		Units: "number",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.responses",
+		Ctx:   "nginxvts.serverzones.requests",
+		Dims: Dims{
+			{ID: "serverzones_%s_requestcounter", Name: "requestcounter"},
+		},
+	},
+	{
+		ID:    "responses_%s",
+		Title: "ServerZones response code",
+		Units: "number",
+		Fam:   "serverzones",
+		Ctx:   "nginxvts.serverzones.responses",
 		Dims: Dims{
 			{ID: "serverzones_%s_responses_1xx", Name: "1xx"},
 			{ID: "serverzones_%s_responses_2xx", Name: "2xx"},
@@ -59,15 +70,33 @@ var nginxVtsServerZonesCharts = Charts{
 		},
 	},
 	{
-		ID:    "status_%s",
-		Title: "ServerZone status.",
+		ID:    "cache_%s",
+		Title: "ServerZones cache",
+		Units: "number",
+		Fam:   "serverzones",
+		Ctx:   "nginxvts.serverzones.cache",
+		Dims: Dims{
+			{ID: "serverzones_%s_responses_miss", Name: "Miss"},
+			{ID: "serverzones_%s_responses_bypass", Name: "Bypass"},
+			{ID: "serverzones_%s_responses_expired", Name: "Expired"},
+			{ID: "serverzones_%s_responses_stale", Name: "Stale"},
+			{ID: "serverzones_%s_responses_updating", Name: "Updating"},
+			{ID: "serverzones_%s_responses_revalidated", Name: "revalidated"},
+			{ID: "serverzones_%s_responses_hit", Name: "Hit"},
+			{ID: "serverzones_%s_responses_scarce", Name: "Scarce"},
+		},
+	},
+	{
+		ID:    "io_%s",
+		Title: "ServerZones IO",
 		Units: "bytes",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.status",
+		Ctx:   "nginxvts.serverzones.status",
 		Dims: Dims{
-			{ID: "serverzones_%s_requestcounter", Name: "requestcounter"},
 			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
 			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
 		},
 	},
 }
+
+var nginxVtsUpstreamZonesCharts = Charts{}

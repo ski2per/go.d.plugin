@@ -136,3 +136,16 @@ var nginxVtsUpstreamZonesCharts = Charts{
 		},
 	},
 }
+
+var nginxVtsFilterZonesCharts = Charts{
+	{
+		ID:    "requests_%s",
+		Title: "Total number of client requests",
+		Units: "number",
+		Fam:   "filterzones",
+		Ctx:   "nginxvts.filterzones.requests",
+		Dims: Dims{
+			{ID: "filterzones_%s_requestcounter", Name: "Requests"},
+		},
+	},
+}

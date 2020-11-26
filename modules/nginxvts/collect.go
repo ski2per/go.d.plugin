@@ -16,9 +16,10 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 		return nil, err
 	}
 
-	nv.addMainCharts(ms, collected)
-	nv.addServerZonesCharts(ms, collected)
-	nv.addUpstreamZonesCharts(ms, collected)
+	// nv.addMainCharts(ms, collected)
+	// nv.addServerZonesCharts(ms, collected)
+	// nv.addUpstreamZonesCharts(ms, collected)
+	nv.addFilterZonesCharts(ms, collected)
 
 	// fmt.Printf("%+v\n\n", collected)
 	// tmp := stm.ToMap(ms)
@@ -29,19 +30,19 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 	return tmp, nil
 }
 
-func (nv *NginxVts) addMainCharts(ms *vtsStatus, collected map[string]interface{}) {
-	collected["loadmsec"] = ms.LoadMsec
-	collected["nowmsec"] = ms.NowMsec
-	collected["connections"] = ms.Connections
+func (nv *NginxVts) addMainCharts(stat *vtsStatus, collected map[string]interface{}) {
+	collected["loadmsec"] = stat.LoadMsec
+	collected["nowmsec"] = stat.NowMsec
+	collected["connections"] = stat.Connections
 }
 
-func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus, collected map[string]interface{}) {
-	if !ms.hasServerZones() {
+func (nv *NginxVts) addServerZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
+	if !stat.hasServerZones() {
 		return
 	}
-	collected["serverzones"] = ms.ServerZones
+	collected["serverzones"] = stat.ServerZones
 
-	for server := range ms.ServerZones {
+	for server := range stat.ServerZones {
 		charts := nginxVtsServerZonesCharts.Copy()
 		for _, chart := range *charts {
 			chart.ID = fmt.Sprintf(chart.ID, server)
@@ -56,13 +57,13 @@ func (nv *NginxVts) addServerZonesCharts(ms *vtsStatus, collected map[string]int
 	}
 }
 
-func (nv *NginxVts) addUpstreamZonesCharts(ms *vtsStatus, collected map[string]interface{}) {
-	if !ms.hasUpstreamZones() {
+func (nv *NginxVts) addUpstreamZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
+	if !stat.hasUpstreamZones() {
 		return
 	}
 
 	upstreamMap := make(map[string]Upstream)
-	for upstreamKey, upstreamList := range ms.UpstreamZones {
+	for upstreamKey, upstreamList := range stat.UpstreamZones {
 		for _, upstream := range upstreamList {
 			charts := nginxVtsUpstreamZonesCharts.Copy()
 			mergedKey := fmt.Sprintf("%s:%s", upstreamKey, upstream.Server)
@@ -79,4 +80,21 @@ func (nv *NginxVts) addUpstreamZonesCharts(ms *vtsStatus, collected map[string]i
 		}
 	}
 	collected["upstreamzones"] = upstreamMap
+}
+
+func (nv *NginxVts) addFilterZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
+	if !stat.hasFilterZones() {
+		return
+	}
+
+	for k0, upstreamMap := range stat.FilterZones {
+		for k1, upstream := range upstreamMap {
+			charts := nginxVtsFilterZonesCharts.Copy()
+			mergedKey = fmt.Sprintf("%s%s",k0, k1)
+			for _, chart := range *charts {
+				chart.ID = fmt.Sprintf(chart.ID, mergedKey)
+				chart.Fam =
+			}
+		}
+	}
 }

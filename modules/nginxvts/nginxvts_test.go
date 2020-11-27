@@ -21,22 +21,16 @@ func Test_New(t *testing.T) {
 
 func Test_Init(t *testing.T) {
 	job0 := New()
-	job1 :=
-	config := Config{
-		HTTP: web.HTTP{
-			Request: web.Request{
-				URL: defaultURL,
-			},
-			Client: web.Client{
-				Timeout: web.Duration{Duration: defaultHTTPTimeout},
+	job1 := &NginxVts{
+		Config: Config{
+			HTTP: web.HTTP{
+				Request: web.Request{
+					URL: "",
+				},
 			},
 		},
 	}
 
-	return &NginxVts{
-		Config: config,
-		charts: nginxVtsMainCharts.Copy(),
-	}
-
 	require.True(t, job0.Init())
+	require.False(t, job1.Init())
 }

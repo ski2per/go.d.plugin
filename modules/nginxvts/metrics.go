@@ -31,6 +31,7 @@ func (v vtsStatus) hasUpstreamZones() bool { return v.UpstreamZones != nil }
 func (v vtsStatus) hasFilterZones() bool   { return v.FilterZones != nil }
 func (v vtsStatus) hasCacheZones() bool    { return v.CacheZones != nil }
 
+// Server is Nginx virtual host name
 type Server struct {
 	RequestCounter int64 `stm:"requestcounter"`
 	InBytes        int64 `stm:"inbytes"`
@@ -52,6 +53,7 @@ type Server struct {
 	} `stm:"responses"`
 }
 
+// Upstream is Nginx proxy upstream
 type Upstream struct {
 	Server         string
 	RequestCounter int64 `stm:"requestcounter"`
@@ -66,6 +68,7 @@ type Upstream struct {
 	} `stm:"responses"`
 }
 
+// Cache is Nginx proxy cache
 type Cache struct {
 	MaxSize   int64 `stm:"maxsize"`
 	UsedSize  int64 `stm:"usedsize"`

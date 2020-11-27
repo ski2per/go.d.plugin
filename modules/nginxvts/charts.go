@@ -57,7 +57,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "responses_%s",
-		Title: "ServerZones response code",
+		Title: "Response code",
 		Units: "number",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.responses",
@@ -71,7 +71,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "io_%s",
-		Title: "ServerZones IO",
+		Title: "IO",
 		Units: "bytes",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.io",
@@ -188,6 +188,48 @@ var nginxVtsFilterZonesCharts = Charts{
 			{ID: "filterzones_%s_responses_revalidated", Name: "revalidated"},
 			{ID: "filterzones_%s_responses_hit", Name: "Hit"},
 			{ID: "filterzones_%s_responses_scarce", Name: "Scarce"},
+		},
+	},
+}
+
+var nginxVtsCacheZonesCharts = Charts{
+	{
+		ID:    "size_%s",
+		Title: "Cache size",
+		Units: "bytes",
+		Fam:   "cachezones",
+		Ctx:   "nginxvts.cachezones.requests",
+		Dims: Dims{
+			{ID: "cachezones_%s_maxsize", Name: "Max size"},
+			{ID: "cachezones_%s_usedsize", Name: "Used size"},
+		},
+	},
+	{
+		ID:    "io_%s",
+		Title: "Cache IO",
+		Units: "bytes",
+		Fam:   "cachezones",
+		Ctx:   "nginxvts.cachezones.io",
+		Dims: Dims{
+			{ID: "cachezones_%s_inbytes", Name: "inbytes"},
+			{ID: "cachezones_%s_outbytes", Name: "outbytes"},
+		},
+	},
+	{
+		ID:    "responses_%s",
+		Title: "Cache responses",
+		Units: "number",
+		Fam:   "cachezones",
+		Ctx:   "nginxvts.cachezones.cache",
+		Dims: Dims{
+			{ID: "cachezones_%s_responses_miss", Name: "Miss"},
+			{ID: "cachezones_%s_responses_bypass", Name: "Bypass"},
+			{ID: "cachezones_%s_responses_expired", Name: "Expired"},
+			{ID: "cachezones_%s_responses_stale", Name: "Stale"},
+			{ID: "cachezones_%s_responses_updating", Name: "Updating"},
+			{ID: "cachezones_%s_responses_revalidated", Name: "revalidated"},
+			{ID: "cachezones_%s_responses_hit", Name: "Hit"},
+			{ID: "cachezones_%s_responses_scarce", Name: "Scarce"},
 		},
 	},
 }

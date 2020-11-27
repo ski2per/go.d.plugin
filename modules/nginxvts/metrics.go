@@ -22,8 +22,8 @@ type vtsStatus struct {
 	} `stm:"sharedzones" json:"sharedZones"`
 	ServerZones   map[string]Server
 	UpstreamZones map[string][]Upstream
-	FilterZones   map[string]map[string]Server `json:"filterZones"`
-	CacheZones    map[string]Cache             `json:"cacheZones"`
+	FilterZones   map[string]map[string]Server
+	CacheZones    map[string]Cache
 }
 
 func (v vtsStatus) hasServerZones() bool   { return v.ServerZones != nil }
@@ -67,31 +67,18 @@ type Upstream struct {
 }
 
 type Cache struct {
-	MaxSize   uint64 `json:"maxSize"`
-	UsedSize  uint64 `json:"usedSize"`
-	InBytes   uint64 `json:"inBytes"`
-	OutBytes  uint64 `json:"outBytes"`
+	MaxSize   int64 `stm:"maxsize"`
+	UsedSize  int64 `stm:"usedsize"`
+	InBytes   int64 `stm:"inbytes"`
+	OutBytes  int64 `stm:"outbytes"`
 	Responses struct {
-		Miss        uint64 `json:"miss"`
-		Bypass      uint64 `json:"bypass"`
-		Expired     uint64 `json:"expired"`
-		Stale       uint64 `json:"stale"`
-		Updating    uint64 `json:"updating"`
-		Revalidated uint64 `json:"revalidated"`
-		Hit         uint64 `json:"hit"`
-		Scarce      uint64 `json:"scarce"`
-	} `json:"responses"`
-	OverCounts struct {
-		MaxIntegerSize float64 `json:"maxIntegerSize"`
-		InBytes        uint64  `json:"inBytes"`
-		OutBytes       uint64  `json:"outBytes"`
-		Miss           uint64  `json:"miss"`
-		Bypass         uint64  `json:"bypass"`
-		Expired        uint64  `json:"expired"`
-		Stale          uint64  `json:"stale"`
-		Updating       uint64  `json:"updating"`
-		Revalidated    uint64  `json:"revalidated"`
-		Hit            uint64  `json:"hit"`
-		Scarce         uint64  `json:"scarce"`
-	} `json:"overCounts"`
+		Miss        int64 `stm:"miss"`
+		Bypass      int64 `stm:"bypass"`
+		Expired     int64 `stm:"expired"`
+		Stale       int64 `stm:"stale"`
+		Updating    int64 `stm:"updating"`
+		Revalidated int64 `stm:"revalidated"`
+		Hit         int64 `stm:"hit"`
+		Scarce      int64 `stm:"scarce"`
+	} `stm:"responses"`
 }

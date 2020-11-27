@@ -19,7 +19,8 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 	// nv.addMainCharts(ms, collected)
 	// nv.addServerZonesCharts(ms, collected)
 	// nv.addUpstreamZonesCharts(ms, collected)
-	nv.addFilterZonesCharts(ms, collected)
+	// nv.addFilterZonesCharts(ms, collected)
+	nv.addCacheZonesCharts(ms, collected)
 
 	// fmt.Printf("\n\n\n%+v\n\n", collected)
 	// tmp := stm.ToMap(ms)
@@ -40,7 +41,6 @@ func (nv *NginxVts) addServerZonesCharts(stat *vtsStatus, collected map[string]i
 	if !stat.hasServerZones() {
 		return
 	}
-	collected["serverzones"] = stat.ServerZones
 
 	for server := range stat.ServerZones {
 		charts := nginxVtsServerZonesCharts.Copy()
@@ -51,10 +51,9 @@ func (nv *NginxVts) addServerZonesCharts(stat *vtsStatus, collected map[string]i
 				dim.ID = fmt.Sprintf(dim.ID, server)
 			}
 		}
-
-		// fmt.Printf("\n\n\n%+v\n\n\n", *charts)
 		_ = nv.charts.Add(*charts...)
 	}
+	collected["serverzones"] = stat.ServerZones
 }
 
 func (nv *NginxVts) addUpstreamZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
@@ -107,4 +106,24 @@ func (nv *NginxVts) addFilterZonesCharts(stat *vtsStatus, collected map[string]i
 		}
 	}
 	collected["filterzones"] = filterMap
+}
+
+func (nv *NginxVts) addCacheZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
+	if !stat.hasCacheZones() {
+		return
+	}
+
+	for cache := range stat.CacheZones {
+		charts := nginxVtsCacheZonesCharts.Copy()
+		for _, chart := range *charts {
+			chart.ID = fmt.Sprintf(chart.ID, cache)
+			chart.Fam = cache
+			for _, dim := range chart.Dims {
+				dim.ID = fmt.Sprintf(dim.ID, cache)
+			}
+		}
+		_ = nv.charts.Add(*charts...)
+
+	}
+	collected["cachezones"] = stat.CacheZones
 }

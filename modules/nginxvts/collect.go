@@ -63,7 +63,7 @@ func (nv *NginxVts) addUpstreamZonesCharts(stat *vtsStatus, collected map[string
 
 	for upstreamKey, upstreamList := range stat.UpstreamZones {
 		for _, upstream := range upstreamList {
-			mergedKey := fmt.Sprintf("%s:%s", upstreamKey, upstream.Server)
+			mergedKey := fmt.Sprintf("%s_%s", upstreamKey, upstream.Server)
 			upstreamMap[mergedKey] = upstream
 
 			charts := nginxVtsUpstreamZonesCharts.Copy()
@@ -89,7 +89,7 @@ func (nv *NginxVts) addFilterZonesCharts(stat *vtsStatus, collected map[string]i
 
 	for filter, serverMap := range stat.FilterZones {
 		for group, upstream := range serverMap {
-			mergedKey := fmt.Sprintf("%s:%s", filter, group)
+			mergedKey := fmt.Sprintf("%s_%s", filter, group)
 			filterMap[mergedKey] = upstream
 
 			charts := nginxVtsFilterZonesCharts.Copy()

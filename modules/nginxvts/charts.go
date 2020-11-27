@@ -12,7 +12,7 @@ type (
 var nginxVtsMainCharts = Charts{
 	{
 		ID:    "times",
-		Title: "Nginx running times",
+		Title: "Nginx running time",
 		Units: "milliseconds",
 		Fam:   "main",
 		Ctx:   "nginxvts.main",
@@ -101,7 +101,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "cache_%s",
-		Title: "Serverzones cache",
+		Title: "ServerZones cache",
 		Units: "number",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.cache",
@@ -145,7 +145,7 @@ var nginxVtsUpstreamZonesCharts = Charts{
 	},
 	{
 		ID:    "io_%s",
-		Title: "Upstreamzones IO",
+		Title: "UpstreamZones IO",
 		Units: "bytes",
 		Fam:   "upstreamzones",
 		Ctx:   "nginxvts.upstreamzones.io",
@@ -169,7 +169,7 @@ var nginxVtsFilterZonesCharts = Charts{
 	},
 	{
 		ID:    "responses_%s",
-		Title: "Response code of Filterzones",
+		Title: "Response code of FilterZones",
 		Units: "number",
 		Fam:   "filterzones",
 		Ctx:   "nginxvts.filterzones.responses",

@@ -1,11 +1,11 @@
 package nginxvts
 
 type vtsStatus struct {
-	HostName     string
-	NginxVersion string
-	LoadMsec     int64
-	NowMsec      int64
-	Connections  struct {
+	// HostName     string
+	// NginxVersion string
+	LoadMsec    int64
+	NowMsec     int64
+	Connections struct {
 		Active   int64 `stm:"active"`
 		Reading  int64 `stm:"reading"`
 		Writing  int64 `stm:"writing"`
@@ -15,11 +15,11 @@ type vtsStatus struct {
 		Request  int64 `stm:"requests"`
 	} `stm:"connections"`
 	SharedZones struct {
-		Name     string
+		// Name     string
 		MaxSize  int64 `stm:"maxsize"`
 		UsedSize int64 `stm:"usedsize"`
 		UsedNode int64 `stm:"usednode"`
-	} `stm:"sharedzones" json:"sharedZones"`
+	} //`stm:"sharedzones"`
 	ServerZones   map[string]Server
 	UpstreamZones map[string][]Upstream
 	FilterZones   map[string]map[string]Server

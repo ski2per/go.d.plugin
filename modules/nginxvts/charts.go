@@ -30,19 +30,40 @@ var nginxVtsMainCharts = Charts{
 		Fam:   "main",
 		Ctx:   "nginxvts.main",
 		Dims: Dims{
-			{ID: "connections_active", Name: "Active connections"},
-			{ID: "connections_reading", Name: "Reading connections"},
-			{ID: "connections_writing", Name: "Writing connections"},
-			{ID: "connections_waiting", Name: "Waiting connections"},
-			{ID: "connections_accepted", Name: "Accepted connections"},
-			{ID: "connections_handled", Name: "Handled connections"},
-			{ID: "connections_requests", Name: "Requests connections"},
+			{ID: "connections_active", Name: "Active"},
+			{ID: "connections_reading", Name: "Reading"},
+			{ID: "connections_writing", Name: "Writing"},
+			{ID: "connections_waiting", Name: "Waiting"},
+			{ID: "connections_accepted", Name: "Accepted"},
+			{ID: "connections_handled", Name: "Handled"},
+			{ID: "connections_requests", Name: "Requests"},
 		},
 	},
 }
 
-// var nginxVtsSharedZonesChart = Charts{
-// }
+var nginxVtsSharedZonesChart = Charts{
+	{
+		ID:    "size",
+		Title: "Shared memory size",
+		Units: "bytes",
+		Fam:   "sharedzones",
+		Ctx:   "nginxvts.sharedzones.size",
+		Dims: Dims{
+			{ID: "sharedzones_maxsize", Name: "Max size"},
+			{ID: "sharedzones_usedsize", Name: "Used size"},
+		},
+	},
+	{
+		ID:    "node",
+		Title: "Number of node using shared memory",
+		Units: "number",
+		Fam:   "sharedzones",
+		Ctx:   "nginxvts.sharedzones.node",
+		Dims: Dims{
+			{ID: "sharedzones_usednode", Name: "Used node"},
+		},
+	},
+}
 
 var nginxVtsServerZonesCharts = Charts{
 	{
@@ -76,8 +97,8 @@ var nginxVtsServerZonesCharts = Charts{
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.io",
 		Dims: Dims{
-			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
-			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
+			{ID: "serverzones_%s_inbytes", Name: "Inbytes"},
+			{ID: "serverzones_%s_outbytes", Name: "Outbytes"},
 		},
 	},
 	{

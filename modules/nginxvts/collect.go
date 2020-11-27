@@ -17,10 +17,11 @@ func (nv *NginxVts) collect() (map[string]int64, error) {
 	}
 
 	// nv.addMainCharts(ms, collected)
+	nv.addSharedZonesCharts(ms, collected)
 	// nv.addServerZonesCharts(ms, collected)
 	// nv.addUpstreamZonesCharts(ms, collected)
 	// nv.addFilterZonesCharts(ms, collected)
-	nv.addCacheZonesCharts(ms, collected)
+	// nv.addCacheZonesCharts(ms, collected)
 
 	// fmt.Printf("\n\n\n%+v\n\n", collected)
 	// tmp := stm.ToMap(ms)
@@ -35,6 +36,12 @@ func (nv *NginxVts) addMainCharts(stat *vtsStatus, collected map[string]interfac
 	collected["loadmsec"] = stat.LoadMsec
 	collected["nowmsec"] = stat.NowMsec
 	collected["connections"] = stat.Connections
+}
+
+func (nv *NginxVts) addSharedZonesCharts(stat *vtsStatus, collected map[string]interface{}) {
+	charts := nginxVtsSharedZonesChart.Copy()
+	_ = nv.charts.Add(*charts...)
+	collected["sharedzones"] = stat.SharedZones
 }
 
 func (nv *NginxVts) addServerZonesCharts(stat *vtsStatus, collected map[string]interface{}) {

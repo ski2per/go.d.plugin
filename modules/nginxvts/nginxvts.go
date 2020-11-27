@@ -3,9 +3,8 @@ package nginxvts
 import (
 	"time"
 
-	"github.com/netdata/go.d.plugin/pkg/web"
-
 	"github.com/netdata/go.d.plugin/agent/module"
+	"github.com/netdata/go.d.plugin/pkg/web"
 )
 
 const (
@@ -75,14 +74,6 @@ func (nv *NginxVts) Init() bool {
 	nv.Debugf("using URL %s", nv.URL)
 	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
 
-	//Init charts
-	// charts, err := nv.initCharts()
-	// if err != nil {
-	// 	nv.Errorf("charts init: %v", err)
-	// 	return false
-	// }
-	// nv.charts = charts
-
 	return true
 }
 
@@ -92,12 +83,7 @@ func (nv *NginxVts) Check() bool {
 }
 
 // Charts creates Charts.
-func (nv NginxVts) Charts() *Charts {
-	// return nginxVtsMainCharts.Copy()
-	// return nv.charts
-	return nv.charts
-	// return nv.charts
-}
+func (nv NginxVts) Charts() *Charts { return nv.charts }
 
 // Collect collects metrics.
 func (nv *NginxVts) Collect() map[string]int64 {

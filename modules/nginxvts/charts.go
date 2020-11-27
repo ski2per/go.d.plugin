@@ -5,8 +5,6 @@ import "github.com/netdata/go.d.plugin/agent/module"
 type (
 	// Charts is an alias for module.Charts
 	Charts = module.Charts
-	// Chart is an alias for module.Chart
-	Chart = module.Chart
 	// Dims is an alias for module.Dims
 	Dims = module.Dims
 )
@@ -19,7 +17,7 @@ var nginxVtsMainCharts = Charts{
 		Fam:   "main",
 		Ctx:   "nginxvts.main",
 		Dims: Dims{
-			{ID: "loadmsec", Name: "Start time"},
+			{ID: "loadmsec", Name: "Starting time"},
 			{ID: "nowmsec", Name: "Up time"},
 		},
 	},
@@ -78,7 +76,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "responses_%s",
-		Title: "Response code",
+		Title: "Response code of Serverzones",
 		Units: "number",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.responses",
@@ -92,7 +90,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "io_%s",
-		Title: "IO",
+		Title: "ServerZones IO",
 		Units: "bytes",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.io",
@@ -103,7 +101,7 @@ var nginxVtsServerZonesCharts = Charts{
 	},
 	{
 		ID:    "cache_%s",
-		Title: "ServerZones cache",
+		Title: "Serverzones cache",
 		Units: "number",
 		Fam:   "serverzones",
 		Ctx:   "nginxvts.serverzones.cache",
@@ -133,7 +131,7 @@ var nginxVtsUpstreamZonesCharts = Charts{
 	},
 	{
 		ID:    "responses_%s",
-		Title: "Upstreamzones response code",
+		Title: "Response code of Upstreamzones",
 		Units: "number",
 		Fam:   "upstreamzones",
 		Ctx:   "nginxvts.upstreamzones.responses",
@@ -147,7 +145,7 @@ var nginxVtsUpstreamZonesCharts = Charts{
 	},
 	{
 		ID:    "io_%s",
-		Title: "UpstreamZones IO",
+		Title: "Upstreamzones IO",
 		Units: "bytes",
 		Fam:   "upstreamzones",
 		Ctx:   "nginxvts.upstreamzones.io",
@@ -171,7 +169,7 @@ var nginxVtsFilterZonesCharts = Charts{
 	},
 	{
 		ID:    "responses_%s",
-		Title: "FilterZones response code",
+		Title: "Response code of Filterzones",
 		Units: "number",
 		Fam:   "filterzones",
 		Ctx:   "nginxvts.filterzones.responses",
@@ -185,7 +183,7 @@ var nginxVtsFilterZonesCharts = Charts{
 	},
 	{
 		ID:    "io_%s",
-		Title: "FilterZones IO",
+		Title: "Filterzones IO",
 		Units: "bytes",
 		Fam:   "filterzones",
 		Ctx:   "nginxvts.filterzones.io",
@@ -196,7 +194,7 @@ var nginxVtsFilterZonesCharts = Charts{
 	},
 	{
 		ID:    "cache_%s",
-		Title: "FilterZones cache",
+		Title: "Filterzones cache",
 		Units: "number",
 		Fam:   "filterzones",
 		Ctx:   "nginxvts.filterzones.cache",

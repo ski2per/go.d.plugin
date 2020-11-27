@@ -19,7 +19,7 @@ type vtsStatus struct {
 		MaxSize  int64 `stm:"maxsize"`
 		UsedSize int64 `stm:"usedsize"`
 		UsedNode int64 `stm:"usednode"`
-	} //`stm:"sharedzones"`
+	}
 	ServerZones   map[string]Server
 	UpstreamZones map[string][]Upstream
 	FilterZones   map[string]map[string]Server

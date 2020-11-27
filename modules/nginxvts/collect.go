@@ -9,27 +9,18 @@ import (
 func (nv *NginxVts) collect() (map[string]int64, error) {
 	collected := make(map[string]interface{})
 	ms, err := nv.apiClient.getVtsStatus()
-	// fmt.Printf("%+v\n", ms)
 	if err != nil {
-		// return make(map[string]int64), errors.New("get vts status error")
-		// return nil, errors.New("get vts status error")
 		return nil, err
 	}
 
-	// nv.addMainCharts(ms, collected)
+	nv.addMainCharts(ms, collected)
 	nv.addSharedZonesCharts(ms, collected)
-	// nv.addServerZonesCharts(ms, collected)
-	// nv.addUpstreamZonesCharts(ms, collected)
-	// nv.addFilterZonesCharts(ms, collected)
-	// nv.addCacheZonesCharts(ms, collected)
+	nv.addServerZonesCharts(ms, collected)
+	nv.addUpstreamZonesCharts(ms, collected)
+	nv.addFilterZonesCharts(ms, collected)
+	nv.addCacheZonesCharts(ms, collected)
 
-	// fmt.Printf("\n\n\n%+v\n\n", collected)
-	// tmp := stm.ToMap(ms)
-	tmp := stm.ToMap(collected)
-
-	// return stm.ToMap()
-	// fmt.Printf("\n\n\n%+v\n\n\n", tmp)
-	return tmp, nil
+	return stm.ToMap(collected), nil
 }
 
 func (nv *NginxVts) addMainCharts(stat *vtsStatus, collected map[string]interface{}) {

@@ -1,5 +1,42 @@
 package nginxvts
 
-import "testing"
+import (
+	"testing"
 
-func TestNginxvts_Cleanup(t *testing.T) { New().Cleanup() }
+	"github.com/netdata/go.d.plugin/agent/module"
+	"github.com/netdata/go.d.plugin/pkg/web"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
+
+func Test_Cleanup(t *testing.T) { New().Cleanup() }
+
+func Test_New(t *testing.T) {
+	job := New()
+
+	assert.Implements(t, (*module.Module)(nil), job)
+	assert.Equal(t, defaultURL, job.URL)
+	assert.Equal(t, defaultHTTPTimeout, job.Timeout.Duration)
+}
+
+func Test_Init(t *testing.T) {
+	job0 := New()
+	job1 :=
+	config := Config{
+		HTTP: web.HTTP{
+			Request: web.Request{
+				URL: defaultURL,
+			},
+			Client: web.Client{
+				Timeout: web.Duration{Duration: defaultHTTPTimeout},
+			},
+		},
+	}
+
+	return &NginxVts{
+		Config: config,
+		charts: nginxVtsMainCharts.Copy(),
+	}
+
+	require.True(t, job0.Init())
+}

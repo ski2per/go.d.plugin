@@ -1,6 +1,6 @@
 <!--
 title: "NGINX Vts monitoring"
-custom_edit_url: https://github.com/netdata/go.d.plugin/edit/master/modules/nginx/README.md
+custom_edit_url: https://github.com/netdata/go.d.plugin/edit/master/modules/nginxvts/README.md
 sidebar_label: "NGINX VTS"
 -->
 
@@ -15,22 +15,62 @@ This module will monitor one or more `NGINX` servers, depending on your configur
  -   `NGINX` with configured [`nginx-module-vts`](https://github.com/vozlt/nginx-module-vts).
 
 ## Charts
+
+Nginx VTS will produce following charts:
 - Main charts:
-  - Nginx running times: 
-    - Starting time (`loadMsec`)
-    - Up time (`nowMsec`)
-  - Nginx connections
-    - Active connections (`active`)
-		-	Reading connections, Name: "Reading"},
-			writing", Name: "Writing"},
-			waiting", Name: "Waiting"},
-			accepted", Name: "Accepted"},
-			handled", Name: "Handled"},
-			requests", Name: "Requests"},
+  - Nginx running time (`milliseconds`): 
+    - Starting time
+    - Up time
+  - Nginx connections (`number`):
+    - active,	reading, writing, waiting, accepted, handled,	requests
 
-It produces following charts:
-- TBC
+- SharedZones
+  - Shared memory size (`bytes`)
+    - Maximum size of shared memory
+    - Current size of shared memory
+  - Number of node using in shared memory (`number`)
 
+- ServerZones charts
+  - Total number of client requests (`number`)
+  - Response code (`number`)
+    - 1xx, 2xx, 3xx, 4xx, 5xx
+  - IO (`bytes`)
+    - The total number of bytes received from clients
+    - The total number of bytes sent to clients
+  - cache (`number`)
+    - miss, bypass, expired, stale, updating, revalidated, hit, scarce
+
+- UpstreamZones charts
+  - Total number of client connections forwarded to this server (`number`)
+  - Response code (`number`)
+    - 1xx, 2xx, 3xx, 4xx, 5xx
+  - IO (`bytes`)
+    - The total number of bytes received from clients
+    - The total number of bytes sent to clients
+
+- FilterZones charts
+  - Total number of client requests (`number`)
+  - Response code (`number`)
+    - 1xx, 2xx, 3xx, 4xx, 5xx
+  - IO (`bytes`)
+    - The total number of bytes received from clients
+    - The total number of bytes sent to clients
+  - cache (`number`)
+    - miss, bypass, expired, stale, updating, revalidated, hit, scarce
+  
+- CacheZones charts
+  - Cache size (`bytes`)
+  - Shared memory size (`bytes`)
+    - Maximum size of cache
+    - Current size of cache
+  - IO (`bytes`)
+    - The total number of bytes received from cache
+    - The total number of bytes sent to cache
+  - Cache responses (`number`)
+    - miss, bypass, expired, stale, updating, revalidated, hit, scarce
+
+Refer [`nginx-module-vts`](https://github.com/vozlt/nginx-module-vts#json) for more information.
+  
 
 ## Configuration
 

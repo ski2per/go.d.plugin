@@ -37,12 +37,14 @@ func (api *apiClient) getVtsStatus() (*vtsStatus, error) {
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("ioutil.ReadAll failed", err)
+		return nil, err
 	}
 
 	var vts vtsStatus
 	err = json.Unmarshal(data, &vts)
 	if err != nil {
 		log.Println("json.Unmarshal failed", err)
+		return nil, err
 	}
 	return &vts, nil
 

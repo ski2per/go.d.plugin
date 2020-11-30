@@ -8,6 +8,7 @@ import (
 
 func (nv *NginxVts) collect() (map[string]int64, error) {
 	collected := make(map[string]interface{})
+
 	ms, err := nv.apiClient.getVtsStatus()
 	if err != nil {
 		return nil, err
@@ -61,9 +62,10 @@ func (nv *NginxVts) addUpstreamZonesCharts(stat *vtsStatus, collected map[string
 
 	upstreamMap := make(map[string]Upstream)
 
-	for upstreamKey, upstreamList := range stat.UpstreamZones {
+	for upstreamGrp, upstreamList := range stat.UpstreamZones {
 		for _, upstream := range upstreamList {
-			mergedKey := fmt.Sprintf("%s_%s", upstreamKey, upstream.Server)
+			// Merge upstream group name and upstream server as new key
+			mergedKey := fmt.Sprintf("%s_%s", upstreamGrp, upstream.Server)
 			upstreamMap[mergedKey] = upstream
 
 			charts := nginxVtsUpstreamZonesCharts.Copy()

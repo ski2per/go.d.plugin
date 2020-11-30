@@ -68,12 +68,7 @@ func (nv *NginxVts) Init() bool {
 		nv.Error(err)
 		return false
 	}
-
 	nv.apiClient = newAPIClient(client, nv.Request)
-
-	nv.Debugf("using URL %s", nv.URL)
-	nv.Debugf("using timeout: %s", nv.Timeout.Duration)
-
 	return true
 }
 

@@ -45,7 +45,7 @@ var nginxVtsSharedZonesChart = Charts{
 		Title: "Shared memory size",
 		Units: "bytes",
 		Fam:   "sharedzones",
-		Ctx:   "nginxvts.sharedzones.size",
+		Ctx:   "nginxvts.sharedzones_size",
 		Dims: Dims{
 			{ID: "sharedzones_maxsize", Name: "max size"},
 			{ID: "sharedzones_usedsize", Name: "used size"},
@@ -56,7 +56,7 @@ var nginxVtsSharedZonesChart = Charts{
 		Title: "Number of node using shared memory",
 		Units: "number",
 		Fam:   "sharedzones",
-		Ctx:   "nginxvts.sharedzones.node",
+		Ctx:   "nginxvts.sharedzones_node",
 		Dims: Dims{
 			{ID: "sharedzones_usednode", Name: "used node"},
 		},
@@ -69,7 +69,7 @@ var nginxVtsServerZonesCharts = Charts{
 		Title: "Total number of client requests",
 		Units: "number",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.serverzones.requests",
+		Ctx:   "nginxvts.serverzones_requests",
 		Dims: Dims{
 			{ID: "serverzones_%s_requestcounter", Name: "requests"},
 		},
@@ -79,7 +79,7 @@ var nginxVtsServerZonesCharts = Charts{
 		Title: "Response code of Serverzones",
 		Units: "number",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.serverzones.responses",
+		Ctx:   "nginxvts.serverzones_responses",
 		Dims: Dims{
 			{ID: "serverzones_%s_responses_1xx", Name: "1xx"},
 			{ID: "serverzones_%s_responses_2xx", Name: "2xx"},
@@ -91,12 +91,12 @@ var nginxVtsServerZonesCharts = Charts{
 	{
 		ID:    "io_%s",
 		Title: "ServerZones IO",
-		Units: "bytes",
+		Units: "bytes/s",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.serverzones.io",
+		Ctx:   "nginxvts.serverzones_io",
 		Dims: Dims{
-			{ID: "serverzones_%s_inbytes", Name: "inbytes"},
-			{ID: "serverzones_%s_outbytes", Name: "outbytes"},
+			{ID: "serverzones_%s_inbytes", Name: "inbytes", Algo: module.Incremental},
+			{ID: "serverzones_%s_outbytes", Name: "outbytes", Algo: module.Incremental},
 		},
 	},
 	{
@@ -104,7 +104,7 @@ var nginxVtsServerZonesCharts = Charts{
 		Title: "ServerZones cache",
 		Units: "number",
 		Fam:   "serverzones",
-		Ctx:   "nginxvts.serverzones.cache",
+		Ctx:   "nginxvts.serverzones_cache",
 		Dims: Dims{
 			{ID: "serverzones_%s_responses_miss", Name: "miss"},
 			{ID: "serverzones_%s_responses_bypass", Name: "bypass"},
@@ -124,7 +124,7 @@ var nginxVtsUpstreamZonesCharts = Charts{
 		Title: "Total number of client connections forwarded to this server",
 		Units: "number",
 		Fam:   "upstreamzones",
-		Ctx:   "nginxvts.upstreamzones.requests",
+		Ctx:   "nginxvts.upstreamzones_requests",
 		Dims: Dims{
 			{ID: "upstreamzones_%s_requestcounter", Name: "Requests"},
 		},
@@ -146,12 +146,12 @@ var nginxVtsUpstreamZonesCharts = Charts{
 	{
 		ID:    "io_%s",
 		Title: "UpstreamZones IO",
-		Units: "bytes",
+		Units: "bytes/s",
 		Fam:   "upstreamzones",
-		Ctx:   "nginxvts.upstreamzones.io",
+		Ctx:   "nginxvts.upstreamzones_io",
 		Dims: Dims{
-			{ID: "upstreamzones_%s_inbytes", Name: "inbytes"},
-			{ID: "upstreamzones_%s_outbytes", Name: "outbytes"},
+			{ID: "upstreamzones_%s_inbytes", Name: "inbytes", Algo: module.Incremental},
+			{ID: "upstreamzones_%s_outbytes", Name: "outbytes", Algo: module.Incremental},
 		},
 	},
 }
@@ -162,7 +162,7 @@ var nginxVtsFilterZonesCharts = Charts{
 		Title: "Total number of client requests",
 		Units: "number",
 		Fam:   "filterzones",
-		Ctx:   "nginxvts.filterzones.requests",
+		Ctx:   "nginxvts.filterzones_requests",
 		Dims: Dims{
 			{ID: "filterzones_%s_requestcounter", Name: "requests"},
 		},
@@ -172,7 +172,7 @@ var nginxVtsFilterZonesCharts = Charts{
 		Title: "Response code of FilterZones",
 		Units: "number",
 		Fam:   "filterzones",
-		Ctx:   "nginxvts.filterzones.responses",
+		Ctx:   "nginxvts.filterzones_responses",
 		Dims: Dims{
 			{ID: "filterzones_%s_responses_1xx", Name: "1xx"},
 			{ID: "filterzones_%s_responses_2xx", Name: "2xx"},
@@ -184,12 +184,12 @@ var nginxVtsFilterZonesCharts = Charts{
 	{
 		ID:    "io_%s",
 		Title: "Filterzones IO",
-		Units: "bytes",
+		Units: "bytes/s",
 		Fam:   "filterzones",
-		Ctx:   "nginxvts.filterzones.io",
+		Ctx:   "nginxvts.filterzones_io",
 		Dims: Dims{
-			{ID: "filterzones_%s_inbytes", Name: "inbytes"},
-			{ID: "filterzones_%s_outbytes", Name: "outbytes"},
+			{ID: "filterzones_%s_inbytes", Name: "inbytes", Algo: module.Incremental},
+			{ID: "filterzones_%s_outbytes", Name: "outbytes", Algo: module.Incremental},
 		},
 	},
 	{
@@ -197,7 +197,7 @@ var nginxVtsFilterZonesCharts = Charts{
 		Title: "Filterzones cache",
 		Units: "number",
 		Fam:   "filterzones",
-		Ctx:   "nginxvts.filterzones.cache",
+		Ctx:   "nginxvts.filterzones_cache",
 		Dims: Dims{
 			{ID: "filterzones_%s_responses_miss", Name: "miss"},
 			{ID: "filterzones_%s_responses_bypass", Name: "bypass"},
@@ -217,7 +217,7 @@ var nginxVtsCacheZonesCharts = Charts{
 		Title: "Cache size",
 		Units: "bytes",
 		Fam:   "cachezones",
-		Ctx:   "nginxvts.cachezones.requests",
+		Ctx:   "nginxvts.cachezones_requests",
 		Dims: Dims{
 			{ID: "cachezones_%s_maxsize", Name: "max size"},
 			{ID: "cachezones_%s_usedsize", Name: "used size"},
@@ -226,12 +226,12 @@ var nginxVtsCacheZonesCharts = Charts{
 	{
 		ID:    "io_%s",
 		Title: "Cache IO",
-		Units: "bytes",
+		Units: "bytes/s",
 		Fam:   "cachezones",
-		Ctx:   "nginxvts.cachezones.io",
+		Ctx:   "nginxvts.cachezones_io",
 		Dims: Dims{
-			{ID: "cachezones_%s_inbytes", Name: "inbytes"},
-			{ID: "cachezones_%s_outbytes", Name: "outbytes"},
+			{ID: "cachezones_%s_inbytes", Name: "inbytes", Algo: module.Incremental},
+			{ID: "cachezones_%s_outbytes", Name: "outbytes", Algo: module.Incremental},
 		},
 	},
 	{
@@ -239,7 +239,7 @@ var nginxVtsCacheZonesCharts = Charts{
 		Title: "Cache responses",
 		Units: "number",
 		Fam:   "cachezones",
-		Ctx:   "nginxvts.cachezones.cache",
+		Ctx:   "nginxvts.cachezones_cache",
 		Dims: Dims{
 			{ID: "cachezones_%s_responses_miss", Name: "miss"},
 			{ID: "cachezones_%s_responses_bypass", Name: "bypass"},
